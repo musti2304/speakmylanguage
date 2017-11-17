@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Speak My Language</string>
+    <string name="action_settings">Settings</string>
+    <string name="add_new_language">Add Language</string>
+    <string name="enter_language">Enter language</string>
+    <string name="button_add">Add</string>
+    <string name="hint">Add your language\nby pressing the \"+\" Button</string>
+</resources>
