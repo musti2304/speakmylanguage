@@ -1,4 +1,0 @@
-#Fri Nov 17 12:40:28 CET 2017
-base.0=/Users/myousef/android/SpeakMyLanguage/app/build/intermediates/transforms/dexMerger/debug/0
-renamed.0=classes.dex
-file.0=/Users/myousef/android/SpeakMyLanguage/app/build/intermediates/transforms/dexMerger/debug/0/classes.dex
