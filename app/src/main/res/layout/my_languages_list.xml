@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+<ListView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".View.MyLanguagesActivity"
+    android:id="@+id/myLanguagesList"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:orientation="vertical"/>
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/languageContainer"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_alignParentEnd="true"
+    android:layout_alignParentTop="true"
+    android:layout_toEndOf="@id/myLanguagesTextView"
+    android:layout_weight="1"
+    android:gravity="bottom"
+    android:orientation="vertical"
+    android:paddingStart="16dp">
+
+    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/myLanguagesTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:gravity="center|start"
+        android:padding="12dp"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        tools:text="Language" />
+
+</LinearLayout>
