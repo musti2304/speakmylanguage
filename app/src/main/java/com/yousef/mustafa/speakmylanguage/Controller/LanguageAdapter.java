@@ -7,12 +7,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.yousef.mustafa.speakmylanguage.Model.Language;
 import com.yousef.mustafa.speakmylanguage.R;
-import com.yousef.mustafa.speakmylanguage.View.AddNewLanguageActivity;
 
 import java.util.ArrayList;
 
@@ -34,7 +32,7 @@ public class LanguageAdapter extends ArrayAdapter<Language> {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View listItemView = convertView;
         if (listItemView == null) {
-            listItemView = LayoutInflater.from(getContext()).inflate(R.layout.my_languages_list, parent, false);
+            listItemView = LayoutInflater.from(getContext()).inflate(R.layout.my_languages_list_items, parent, false);
         }
 
         Language currentLanguage = getItem(position);

@@ -9,7 +9,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.yousef.mustafa.speakmylanguage.Model.Language;
 import com.yousef.mustafa.speakmylanguage.R;
+
+import java.util.ArrayList;
 
 /**
  * Created by myousef on 17.11.17.
@@ -18,12 +21,10 @@ import com.yousef.mustafa.speakmylanguage.R;
 
 public class MyLanguagesActivity extends AppCompatActivity {
 
-    FloatingActionButton fab_addNewLanguage;
-    ArrayAdapter<String> arrayAdapter;
     ListView listView;
     TextView textView;
-    String language;
-
+    ArrayAdapter<String> arrayAdapter;
+    ArrayList<String> languageArrayList;
 
 
     /** Change of thinking, how about doing it in the activity
@@ -32,70 +33,27 @@ public class MyLanguagesActivity extends AppCompatActivity {
      *  Then add another TextView below to repeat the same steps
      */
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_languages);
+
         textView = findViewById(R.id.hintTextView);
         listView = findViewById(R.id.myLanguagesListView);
 
+        languageArrayList = new ArrayList<>();
+        languageArrayList.add("Language");
 
-
-        arrayAdapter = new ArrayAdapter<>(this, R.layout.my_languages_list, R.id.myLanguagesTextView);
+        arrayAdapter = new ArrayAdapter<>(this, R.layout.my_languages_list_items, R.id.myLanguagesTextView, languageArrayList);
         listView.setAdapter(arrayAdapter);
-        textView.setVisibility(View.INVISIBLE);
-        //Toolbar toolbar = findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
-//        textView = findViewById(R.id.hintTextView);
 
-
-        fab_addNewLanguage = findViewById(R.id.fab);
-        fab_addNewLanguage.setOnClickListener(new View.OnClickListener() {
+        textView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MyLanguagesActivity.this, AddNewLanguageActivity.class);
-                startActivity(intent);
+            public boolean onLongClick(View view) {
 
-                //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                return false;
             }
         });
 
     }
-
-   /* @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if(requestCode == RESULT_CODE) {
-            if(resultCode == RESULT_OK) {
-                String language = data.getStringExtra("lang");
-
-                textView.setText(language);
-                textView.setVisibility(View.VISIBLE);
-            }
-        }
-    }
-*/
-    /*@Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_my_languages, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }*/
 }

@@ -4,5 +4,6 @@
     <string name="add_new_language">Add Language</string>
     <string name="enter_language">Enter language</string>
     <string name="button_add">Add</string>
-    <string name="hint">Add your language\nby pressing the \"+\" Button</string>
+    <string name="hint">Double tap the item above to add a language</string>
+    <string name="add_your_language"><![CDATA[<Add your language>]]></string>
 </resources>
