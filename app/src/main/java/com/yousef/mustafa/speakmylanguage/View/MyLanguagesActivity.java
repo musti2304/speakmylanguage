@@ -52,27 +52,27 @@ public class MyLanguagesActivity extends AppCompatActivity {
         floatingButtonAddNewLanguage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final Dialog dialog = new Dialog(MyLanguagesActivity.this);
-                dialog.setContentView(R.layout.activity_add_new_language);
-                final EditText editText = dialog.findViewById(R.id.addLanguageEditText);
-                final Button button = dialog.findViewById(R.id.addLanguageButton);
+                final Dialog addNewLanguageDialog = new Dialog(MyLanguagesActivity.this);
+                addNewLanguageDialog.setContentView(R.layout.activity_add_new_language);
+                final EditText addLanguageEditText = addNewLanguageDialog.findViewById(R.id.addLanguageEditText);
+                final Button addLanguageButton = addNewLanguageDialog.findViewById(R.id.addLanguageButton);
 
-                button.setOnClickListener(new View.OnClickListener() {
+                addLanguageButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if (!editText.getText().toString().equals("")) {
-                            languageArrayList.add(editText.getText().toString());
+                        if (!addLanguageEditText.getText().toString().equals("")) {
+                            languageArrayList.add(addLanguageEditText.getText().toString());
                             arrayAdapter = new ArrayAdapter<>(MyLanguagesActivity.this, R.layout.my_languages_list, getLanguageArrayList());
                             myLanguagesListView.setAdapter(arrayAdapter);
                             hintTextView.setVisibility(View.GONE);
-                            dialog.dismiss();
+                            addNewLanguageDialog.dismiss();
                         } else {
                             Toast.makeText(MyLanguagesActivity.this, "Please enter language", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
 
-                dialog.show();
+                addNewLanguageDialog.show();
             }
         });
     }
