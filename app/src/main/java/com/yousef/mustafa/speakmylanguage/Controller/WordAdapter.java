@@ -1,6 +1,7 @@
 package com.yousef.mustafa.speakmylanguage.Controller;
 
 import android.app.Activity;
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -9,10 +10,12 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.yousef.mustafa.speakmylanguage.Model.Word;
 import com.yousef.mustafa.speakmylanguage.R;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -20,26 +23,31 @@ import java.util.ArrayList;
  * Project: speakmylanguage
  */
 
-public class WordAdapter extends BaseAdapter {
+public class WordAdapter extends ArrayAdapter<Word> {
 
-
-    @Override
-    public int getCount() {
-        return 0;
+    public WordAdapter(@NonNull Context context, ArrayList<Word> words) {
+        super(context, 0, words);
     }
 
+    @NonNull
     @Override
-    public Object getItem(int i) {
-        return null;
-    }
+    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+        View listItemView = convertView;
 
-    @Override
-    public long getItemId(int i) {
-        return 0;
-    }
+        if(listItemView == null) {
+            listItemView = LayoutInflater.from(getContext()).inflate(R.layout.my_word_list_items, parent, false);
+        }
 
-    @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
-        return null;
+        Word currentWord = getItem(position);
+
+        TextView defaultWord = listItemView.findViewById(R.id.myDefaultWord);
+        defaultWord.setText(currentWord.getDefaultTranslation());
+
+        TextView foreignWord = listItemView.findViewById(R.id.myForeignWord);
+        foreignWord.setText(currentWord.getForeignTranslation());
+
+        View textContainer = listItemView.findViewById(R.id.myWordsListItems);
+
+        return listItemView;
     }
 }

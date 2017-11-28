@@ -9,32 +9,43 @@
     <LinearLayout
         android:id="@+id/myWordsListItems"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical" >
-
-        <TextView
-            android:id="@+id/myDefaultWord"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:gravity="bottom"
-            android:textAppearance="?android:textAppearanceMedium"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            tools:text="default word" />
+        android:layout_height="88dp"
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:paddingLeft="16dp" >
 
         <TextView
             android:id="@+id/myForeignWord"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:gravity="top"
+            android:gravity="bottom"
             android:textAppearance="?android:textAppearanceMedium"
-            android:textSize="12sp"
+            android:textSize="24sp"
+            android:textStyle="bold"
             tools:text="foreign word" />
 
+        <TextView
+            android:id="@+id/myDefaultWord"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="top"
+            android:textAppearance="?android:textAppearanceMedium"
+            android:textSize="24sp"
+            tools:text="default word" />
 
 
     </LinearLayout>
+
+    <ImageView
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="16dp"
+        android:src="@drawable/play_icon"/>
 
 </RelativeLayout>

@@ -39,9 +39,9 @@ public class MyLanguagesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_languages);
 
-        // MyLanguagesActivity views
+        /*// MyLanguagesActivity views
         hintTextView = findViewById(R.id.hintTextView);
-        myLanguagesListView = findViewById(R.id.myLanguagesListView);
+        myLanguagesListView = findViewById(R.id.myWordsList);
         floatingButtonAddNewLanguage = findViewById(R.id.fab);
 
         // AltertDialog views
@@ -79,5 +79,6 @@ public class MyLanguagesActivity extends AppCompatActivity {
 
     public ArrayList<String> getLanguageArrayList() {
         return languageArrayList;
+    }*/
     }
 }
