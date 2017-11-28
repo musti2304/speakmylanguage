@@ -5,4 +5,12 @@
     <string name="enter_language">Enter language</string>
     <string name="button_add">Add</string>
     <string name="hint">Add your language\nby pressing the \"+\" Button</string>
+    <string name="add_language_title">Add language</string>
+
+    <string-array name="test">
+        <item>Hallo</item>
+        <item>Test</item>
+
+    </string-array>
+
 </resources>

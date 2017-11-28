@@ -1,15 +1,20 @@
 package com.yousef.mustafa.speakmylanguage.View;
 
-import android.content.Intent;
+import android.app.Dialog;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.yousef.mustafa.speakmylanguage.R;
+
+import java.util.ArrayList;
 
 /**
  * Created by myousef on 17.11.17.
@@ -18,84 +23,61 @@ import com.yousef.mustafa.speakmylanguage.R;
 
 public class MyLanguagesActivity extends AppCompatActivity {
 
-    FloatingActionButton fab_addNewLanguage;
+    // Views
+    TextView hintTextView;
+    ListView myLanguagesListView;
+    FloatingActionButton floatingButtonAddNewLanguage;
+
+    EditText addLanguageEditText;
+    Button addButton;
+
     ArrayAdapter<String> arrayAdapter;
-    ListView listView;
-    TextView textView;
-    String language;
-
-
-
-    /** Change of thinking, how about doing it in the activity
-     *  Create a TextView with a hint
-     *  When double tap convert the TextView to an EditText
-     *  Then add another TextView below to repeat the same steps
-     */
-
+    ArrayList<String> languageArrayList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_languages);
-        textView = findViewById(R.id.hintTextView);
-        listView = findViewById(R.id.myLanguagesListView);
+
+        // MyLanguagesActivity views
+        hintTextView = findViewById(R.id.hintTextView);
+        myLanguagesListView = findViewById(R.id.myLanguagesListView);
+        floatingButtonAddNewLanguage = findViewById(R.id.fab);
+
+        // AltertDialog views
+        addButton = new Button(MyLanguagesActivity.this);
+        addLanguageEditText = new EditText(MyLanguagesActivity.this);
 
 
-
-        arrayAdapter = new ArrayAdapter<>(this, R.layout.my_languages_list, R.id.myLanguagesTextView);
-        listView.setAdapter(arrayAdapter);
-        textView.setVisibility(View.INVISIBLE);
-        //Toolbar toolbar = findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
-//        textView = findViewById(R.id.hintTextView);
-
-
-        fab_addNewLanguage = findViewById(R.id.fab);
-        fab_addNewLanguage.setOnClickListener(new View.OnClickListener() {
+        floatingButtonAddNewLanguage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MyLanguagesActivity.this, AddNewLanguageActivity.class);
-                startActivity(intent);
+                final Dialog dialog = new Dialog(MyLanguagesActivity.this);
+                dialog.setContentView(R.layout.activity_add_new_language);
+                final EditText editText = dialog.findViewById(R.id.addLanguageEditText);
+                final Button button = dialog.findViewById(R.id.addLanguageButton);
 
-                //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (!editText.getText().toString().equals("")) {
+                            languageArrayList.add(editText.getText().toString());
+                            arrayAdapter = new ArrayAdapter<>(MyLanguagesActivity.this, R.layout.my_languages_list, getLanguageArrayList());
+                            myLanguagesListView.setAdapter(arrayAdapter);
+                            hintTextView.setVisibility(View.GONE);
+                            dialog.dismiss();
+                        } else {
+                            Toast.makeText(MyLanguagesActivity.this, "Please enter language", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
+                dialog.show();
             }
         });
-
     }
 
-   /* @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if(requestCode == RESULT_CODE) {
-            if(resultCode == RESULT_OK) {
-                String language = data.getStringExtra("lang");
-
-                textView.setText(language);
-                textView.setVisibility(View.VISIBLE);
-            }
-        }
+    public ArrayList<String> getLanguageArrayList() {
+        return languageArrayList;
     }
-*/
-    /*@Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_my_languages, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }*/
 }

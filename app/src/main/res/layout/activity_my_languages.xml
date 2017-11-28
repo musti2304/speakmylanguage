@@ -7,12 +7,11 @@
     android:orientation="vertical"
     tools:context="com.yousef.mustafa.speakmylanguage.View.MyLanguagesActivity">
 
-
     <android.support.design.widget.AppBarLayout
+        android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay"
-        android:id="@+id/appBarLayout">
+        android:theme="@style/AppTheme.AppBarOverlay">
 
 
         <android.support.v7.widget.Toolbar
@@ -30,8 +29,7 @@
         android:id="@+id/myLanguagesListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/appBarLayout"
-        />
+        android:layout_below="@+id/appBarLayout" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
@@ -54,6 +52,7 @@
         android:layout_marginTop="155dp"
         android:gravity="center"
         android:text="@string/hint"
+        android:textSize="24sp"
         android:textStyle="bold" />
 
 </RelativeLayout>
