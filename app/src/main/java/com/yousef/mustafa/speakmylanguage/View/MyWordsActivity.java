@@ -41,26 +41,21 @@ import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 public class MyWordsActivity extends AppCompatActivity {
 
     public static final int RequestPermissionCode = 1;
-    String randomAudioFileName = "abcdefgh";
-    Random random;
+    String defaultWord, foreignWord;
+    String audioSavePath;
+    ArrayList<Word> wordsArrayList = new ArrayList<>();
+    int position = 0;
+    MediaRecorder mediaRecorder;
 
     // Views
     TextView hintTextView;
     ListView myWordsListView;
     FloatingActionButton floatingButtonAddNewWord;
 
-    private MediaPlayer mediaPlayer;
-    private AudioManager audioManager;
-    MediaRecorder mediaRecorder;
-
-    ArrayList<Word> wordsArrayList = new ArrayList<>();
-    String audioSavePath = null;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_words);
-        random = new Random();
 
         // MyWordsActivity views
         hintTextView = findViewById(R.id.hintTextView);
@@ -80,12 +75,15 @@ public class MyWordsActivity extends AppCompatActivity {
                 addWordButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+
                         if (!addDefaultWordEditText.getText().toString().equals("") && !addForeignWordEditText.getText().toString().equals("")) {
                             WordAdapter wordAdapter = new WordAdapter(MyWordsActivity.this, getWordsArrayList());
-                            wordsArrayList.add(new Word(addDefaultWordEditText.getText().toString(), addForeignWordEditText.getText().toString()));
+                            defaultWord = addDefaultWordEditText.getText().toString();
+                            foreignWord = addForeignWordEditText.getText().toString();
+                            wordsArrayList.add(new Word(foreignWord, defaultWord));
                             myWordsListView.setAdapter(wordAdapter);
                             hintTextView.setVisibility(View.GONE);
-                            addNewWordsDialog.dismiss();
+//                            addNewWordsDialog.dismiss();
                         } else {
                             Toast.makeText(MyWordsActivity.this, "Please enter two words", Toast.LENGTH_SHORT).show();
                         }
@@ -102,9 +100,9 @@ public class MyWordsActivity extends AppCompatActivity {
                                 break;
                             }
                             case MotionEvent.ACTION_UP: {
-                                view.performClick();
                                 imageView.setImageResource(R.drawable.mic_black);
                                 stopAudioRecording();
+                                addNewWordsDialog.dismiss();
                                 break;
                             }
                         }
@@ -125,11 +123,12 @@ public class MyWordsActivity extends AppCompatActivity {
     private void startAudioRecording() {
         if (checkPermission()) {
 
-            // Todo: file format is not supported (not playable)
-            audioSavePath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/" +
-                    createRandomAudioFileName(5) + "AudioRecording.3gp";
+            if (wordsArrayList != null) {
+                audioSavePath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + wordsArrayList.get(position).getForeignTranslation() + ".3gp";
+                ++position;
+                getMediaRecorderReady();
+            }
 
-            getMediaRecorderReady();
 
             try {
                 mediaRecorder.prepare();
@@ -154,16 +153,6 @@ public class MyWordsActivity extends AppCompatActivity {
         mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
         mediaRecorder.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB);
         mediaRecorder.setOutputFile(audioSavePath);
-    }
-
-    private String createRandomAudioFileName(int string) {
-        StringBuilder stringBuilder = new StringBuilder(string);
-        int i = 0;
-        while (i < string) {
-            stringBuilder.append(randomAudioFileName.charAt(random.nextInt(randomAudioFileName.length())));
-            i++;
-        }
-        return stringBuilder.toString();
     }
 
     private void requestPermission() {
