@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -45,6 +46,9 @@ public class WordAdapter extends ArrayAdapter<Word> {
 
         TextView foreignWord = listItemView.findViewById(R.id.myForeignWord);
         foreignWord.setText(currentWord.getForeignTranslation());
+
+        ImageView recordIconImageView = listItemView.findViewById(R.id.recordIconImageView);
+        recordIconImageView.setImageResource(currentWord.getRecordIconImageResourceId());
 
         View textContainer = listItemView.findViewById(R.id.myWordsListItems);
 

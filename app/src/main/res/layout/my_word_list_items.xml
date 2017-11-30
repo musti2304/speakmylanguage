@@ -2,6 +2,7 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/myRelativeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal" >
@@ -14,7 +15,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
-        android:paddingLeft="16dp" >
+        android:layout_marginStart="16dp" >
 
         <TextView
             android:id="@+id/myForeignWord"
@@ -41,11 +42,23 @@
     </LinearLayout>
 
     <ImageView
+        android:id="@+id/playIconImageView"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
         android:layout_marginEnd="16dp"
-        android:src="@drawable/play_icon"/>
+        android:src="@drawable/play_icon"
+        android:clickable="true" />
+
+    <ImageView
+        android:id="@+id/recordIconImageView"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="72dp"
+        android:clickable="true" />
+        <!--android:src="@drawable/mic_black" -->
 
 </RelativeLayout>
