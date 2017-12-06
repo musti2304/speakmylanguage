@@ -1,5 +1,6 @@
 package com.yousef.mustafa.speakmylanguage.Model;
 
+import android.media.MediaRecorder;
 import android.widget.ImageView;
 
 /**
@@ -9,15 +10,22 @@ import android.widget.ImageView;
 
 public class Word {
 
-    private String mDefaultTranslation;
     private String mForeignTranslation;
-    private int recordIconImageResourceId;
-    private int mRecordedAudioResourceId;
+    private String mDefaultTranslation;
+    private ImageView mRecordIconImageResourceId;
+    private MediaRecorder mMediaRecorder;
 
-    public Word(String foreignTranslation, String defaultTranslation, int recordImageResourceId) {
+    public Word(String foreignTranslation, String defaultTranslation, ImageView recordIconImageResourceId, MediaRecorder mediaRecorder) {
         this.mForeignTranslation = foreignTranslation;
         this.mDefaultTranslation = defaultTranslation;
-        this.recordIconImageResourceId = recordImageResourceId;
+        this.mRecordIconImageResourceId = recordIconImageResourceId;
+        this.mMediaRecorder = mediaRecorder;
+    }
+
+    public Word(String foreignTranslation, String defaultTranslation, ImageView recordIconImageResourceId) {
+        this.mForeignTranslation = foreignTranslation;
+        this.mDefaultTranslation = defaultTranslation;
+        this.mRecordIconImageResourceId = recordIconImageResourceId;
     }
 
     public Word(String foreignTranslation, String defaultTranslation) {
@@ -33,11 +41,19 @@ public class Word {
         return mForeignTranslation;
     }
 
-    public int getRecordIconImageResourceId() {
-        return recordIconImageResourceId;
+    public ImageView getRecordIconImageResourceId() {
+        return mRecordIconImageResourceId;
     }
 
-    public int getmRecordedAudioResourceId() {
-        return mRecordedAudioResourceId;
+    public MediaRecorder getMediaRecorder() {
+        return mMediaRecorder;
     }
+
+    public void setDefaultTranslation(String mDefaultTranslation) { this.mDefaultTranslation = mDefaultTranslation; }
+
+    public void setForeignTranslation(String mForeignTranslation) { this.mForeignTranslation = mForeignTranslation; }
+
+    public void setRecordIconImageResourceId(ImageView recordIconImageResourceId) { this.mRecordIconImageResourceId = recordIconImageResourceId; }
+
+    public void setMediaRecorder(MediaRecorder mMediaRecorder) { this.mMediaRecorder = mMediaRecorder; }
 }

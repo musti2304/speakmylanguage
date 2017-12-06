@@ -37,8 +37,6 @@
             android:textAppearance="?android:textAppearanceMedium"
             android:textSize="24sp"
             tools:text="default word" />
-
-
     </LinearLayout>
 
     <ImageView
@@ -58,7 +56,6 @@
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
         android:layout_marginEnd="72dp"
-        android:clickable="true" />
-        <!--android:src="@drawable/mic_black" -->
-
+        android:clickable="true"
+        android:src="@drawable/mic_black"/>
 </RelativeLayout>

@@ -1,22 +1,11 @@
 package com.yousef.mustafa.speakmylanguage.View;
 
-import android.annotation.SuppressLint;
 import android.app.Dialog;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.media.AudioManager;
-import android.media.MediaPlayer;
 import android.media.MediaRecorder;
-import android.os.Environment;
-import android.support.constraint.solver.widgets.Rectangle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.MotionEvent;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -28,12 +17,7 @@ import com.yousef.mustafa.speakmylanguage.Controller.WordAdapter;
 import com.yousef.mustafa.speakmylanguage.Model.Word;
 import com.yousef.mustafa.speakmylanguage.R;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Random;
-
-import static android.Manifest.permission.RECORD_AUDIO;
-import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
 /**
  * Created by myousef on 17.11.17.
@@ -42,28 +26,24 @@ import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
 public class MyWordsActivity extends AppCompatActivity {
 
-    public static final int RequestPermissionCode = 1;
-    String defaultWord, foreignWord;
-    String audioSavePath;
-    ArrayList<Word> wordsArrayList = new ArrayList<>();
-    MediaRecorder mediaRecorder;
+    private static String defaultWord, foreignWord;
+    private static ArrayList<Word> wordsArrayList = new ArrayList<>();
     WordAdapter wordAdapter;
 
-    // Views
+    // Main Activity Views
     TextView hintTextView;
     ListView myWordsListView;
     FloatingActionButton floatingButtonAddNewWord;
-    ImageView recordingImageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_words);
 
-        // MyWordsActivity views
+        // Init Main Activity Views
         hintTextView = findViewById(R.id.hintTextView);
         myWordsListView = findViewById(R.id.myWordsList);
-        floatingButtonAddNewWord = findViewById(R.id.fab);
+        floatingButtonAddNewWord = findViewById(R.id.fabAddNewWord);
 
         floatingButtonAddNewWord.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,21 +52,18 @@ public class MyWordsActivity extends AppCompatActivity {
                 addNewWordsDialog.setContentView(R.layout.activity_add_new_words);
                 final EditText addForeignWordEditText = addNewWordsDialog.findViewById(R.id.addForeignWordEditText);
                 final EditText addDefaultWordEditText = addNewWordsDialog.findViewById(R.id.addDefaultWordEditText);
-                final Button addWordButton = addNewWordsDialog.findViewById(R.id.addWordButton);
+                final Button addNewWordButton = addNewWordsDialog.findViewById(R.id.addNewWordButton);
                 addNewWordsDialog.show();
 
-                addWordButton.setOnClickListener(new View.OnClickListener() {
+                addNewWordButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-
                         if (!addDefaultWordEditText.getText().toString().equals("") && !addForeignWordEditText.getText().toString().equals("")) {
                             foreignWord = addForeignWordEditText.getText().toString();
                             defaultWord = addDefaultWordEditText.getText().toString();
-                            wordsArrayList.add(new Word(foreignWord, defaultWord, R.drawable.mic_black));
+                            wordsArrayList.add(new Word(foreignWord, defaultWord));
                             hintTextView.setVisibility(View.GONE);
                             addNewWordsDialog.dismiss();
-                            recordingImageView = findViewById(R.id.recordIconImageView);
-                            record();
                         } else {
                             Toast.makeText(MyWordsActivity.this, "Please enter two words", Toast.LENGTH_SHORT).show();
                         }
@@ -99,78 +76,36 @@ public class MyWordsActivity extends AppCompatActivity {
         });
     }
 
-    private void record() {
-        if (recordingImageView != null) {
-            recordingImageView.setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View view, MotionEvent motionEvent) {
-                    switch (motionEvent.getAction()) {
-                        case MotionEvent.ACTION_DOWN: {
-                            recordingImageView.setImageResource(R.drawable.mic_red);
-                            startAudioRecording();
-                            break;
-                        }
-                        case MotionEvent.ACTION_UP: {
-                            recordingImageView.setImageResource(R.drawable.mic_black);
-                            stopAudioRecording();
-                            break;
-                        }
-                    }
-                    return true;
-                }
-            });
-        }
+    public static String getDefaultWord() {
+        return defaultWord;
     }
 
-    public ArrayList<Word> getWordsArrayList() {
+    public static void setDefaultWord(String defaultWord) {
+        MyWordsActivity.defaultWord = defaultWord;
+    }
+
+    public static String getForeignWord() {
+        return foreignWord;
+    }
+
+    public static void setForeignWord(String foreignWord) {
+        MyWordsActivity.foreignWord = foreignWord;
+    }
+
+    public static ArrayList<Word> getWordsArrayList() {
         return wordsArrayList;
     }
 
-
-    private void startAudioRecording() {
-        if (checkPermission()) {
-
-            if (wordsArrayList != null) {
-                audioSavePath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + foreignWord + ".3gp";
-                getMediaRecorderReady();
-            }
-
-
-            try {
-                mediaRecorder.prepare();
-                mediaRecorder.start();
-            } catch (IllegalStateException | IOException e) {
-                e.printStackTrace();
-            }
-            Toast.makeText(MyWordsActivity.this, "Recording started", Toast.LENGTH_LONG).show();
-        } else {
-            requestPermission();
-        }
-    }
-
-    private void stopAudioRecording() {
-        mediaRecorder.stop();
-        Toast.makeText(MyWordsActivity.this, "Recording stopped", Toast.LENGTH_LONG).show();
-    }
-
-    private void getMediaRecorderReady() {
-        mediaRecorder = new MediaRecorder();
-        mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-        mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-        mediaRecorder.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB);
-        mediaRecorder.setOutputFile(audioSavePath);
-    }
-
-    private void requestPermission() {
-        ActivityCompat.requestPermissions(MyWordsActivity.this, new String[]{
-                WRITE_EXTERNAL_STORAGE,
-                RECORD_AUDIO}, RequestPermissionCode);
+/*
+    public void requestPermission() {
+        ActivityCompat.requestPermissions(this, new String[]{
+                WRITE_EXTERNAL_STORAGE, RECORD_AUDIO, CAPTURE_AUDIO_OUTPUT, STORAGE}, REQUEST_PERMISSION_CODE);
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
-            case RequestPermissionCode:
+            case REQUEST_PERMISSION_CODE:
                 if (grantResults.length > 0) {
                     boolean StoragePermission = grantResults[0] ==
                             PackageManager.PERMISSION_GRANTED;
@@ -178,22 +113,25 @@ public class MyWordsActivity extends AppCompatActivity {
                             PackageManager.PERMISSION_GRANTED;
 
                     if (StoragePermission && RecordPermission) {
-                        Toast.makeText(MyWordsActivity.this, "Permission Granted",
-                                Toast.LENGTH_LONG).show();
+                        Toast.makeText(this, "Permission Granted",
+                                Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(MyWordsActivity.this, "Permission Denied", Toast.LENGTH_LONG).show();
+                        Toast.makeText(this, "Permission Denied",
+                                Toast.LENGTH_SHORT).show();
                     }
                 }
                 break;
         }
     }
 
-    private boolean checkPermission() {
-        int resultWrite = ContextCompat.checkSelfPermission(getApplicationContext(),
+    public boolean checkPermission() {
+        int resultWrite = ContextCompat.checkSelfPermission(this,
                 WRITE_EXTERNAL_STORAGE);
-        int resultRecord = ContextCompat.checkSelfPermission(getApplicationContext(),
+        int resultRecord = ContextCompat.checkSelfPermission(this,
                 RECORD_AUDIO);
         return resultWrite == PackageManager.PERMISSION_GRANTED &&
                 resultRecord == PackageManager.PERMISSION_GRANTED;
     }
+*/
+
 }

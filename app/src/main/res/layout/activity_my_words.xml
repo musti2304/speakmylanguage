@@ -8,20 +8,26 @@
     android:orientation="vertical"
     tools:context="com.yousef.mustafa.speakmylanguage.View.MyWordsActivity">
 
-    <ListView
-        xmlns:android="http://schemas.android.com/apk/res/android"
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:titleTextColor="@color/colorWhite"
+            app:title="@string/app_name" />
+
+    <ListView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/myWordsList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar"
+        android:drawSelectorOnTop="true"
         android:orientation="vertical"
-        tools:context=".View.MyWordsActivity"
-        android:drawSelectorOnTop="true" >
-
-    </ListView>
+        tools:context=".View.MyWordsActivity" />
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
+        android:id="@+id/fabAddNewWord"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
